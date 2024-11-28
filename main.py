@@ -188,8 +188,11 @@ class WorkShell:
     def pro_cmd_exec(self, argc, argv):
         '''省份指令处理'''
         if argc == 1:
-            self.show_useful_pro()
+            print(self.city_list.selected_pro)
         else:
+            if argv[1] == "?":
+                self.show_useful_pro()
+                return True
             if argv[1] == "now" and argc == 2:
                 print(self.city_list.selected_pro)
             elif argv[1] == "set" and argc == 3:
@@ -199,6 +202,24 @@ class WorkShell:
             else:
                 print("Invalid pro cmd")
                 return False
+        return True
+
+    def city_cmd_exec(self, argc, argv):
+        '''城市指令处理'''
+        if argc == 1:
+            print(self.city_list.selected_city)
+        else:
+            if argv[1] == "?":
+                self.show_useful_city()
+                return True
+            if argv[1] == "now" and argc == 2:
+                print(self.city_list.selected_city)
+            elif argv[1] == "set" and argc == 3:
+                if not self.set_city(argv[2]):
+                    print("Invalid city. Useful city:")
+                    self.show_useful_city()
+            else:
+                print("Invalid city cmd")
         return True
 
     def cmd_exec(self, argc, argv):
@@ -223,18 +244,7 @@ class WorkShell:
         if cmd == "pro":
             return self.pro_cmd_exec(argc, argv)
         if cmd == "city":
-            if argc == 1:
-                self.show_useful_city()
-            else:
-                if argv[1] == "now" and argc == 2:
-                    print(self.city_list.selected_city)
-                elif argv[1] == "set" and argc == 3:
-                    if not self.set_city(argv[2]):
-                        print("Invalid city. Useful city:")
-                        self.show_useful_city()
-                else:
-                    print("Invalid city cmd")
-            return True
+            return self.city_cmd_exec(argc, argv)
         if cmd in ("we", "weather"):
             return self.weather_cmd_exec(argc, argv)
         return False
