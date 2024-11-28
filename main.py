@@ -49,7 +49,7 @@ class WorkShell:
             cmd = input("weather app >")
             if cmd == '':
                 continue
-            argv = cmd.split(" ")
+            argv = cmd.split()
             argc = len(argv)
             if not self.cmd_exec(argc, argv):
                 print("Invalid cmd")
@@ -200,7 +200,6 @@ class WorkShell:
                     print("Invalid province. Useful provinces:")
                     self.show_useful_pro()
             else:
-                print("Invalid pro cmd")
                 return False
         return True
 
@@ -219,7 +218,7 @@ class WorkShell:
                     print("Invalid city. Useful city:")
                     self.show_useful_city()
             else:
-                print("Invalid city cmd")
+                return False
         return True
 
     def cmd_exec(self, argc, argv):
