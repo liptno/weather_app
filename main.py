@@ -1,7 +1,7 @@
 """这个模块提供一个shell窗口用于对天气进行预报，稍微改动后
 可以称为优质的数据提供模块用于给UL模块提供数据
 """
-
+import datetime
 from myWeatherData import city_list
 
 
@@ -153,11 +153,16 @@ class WorkShell:
     def weather_cmd_exec(self, argc, argv):
         '''天气指令处理'''
         #处理help或无指令
-        if argc == 1 or argv[1] == "?":
-            self.weather_help()
+        if argc == 1:
+            print(f"省份:{self.pro}，城市{self.city},当前时间:{datetime.datetime.now()}")
+            self.weather_now()
             return True
         #处理天气信息展示指令
         if argc == 2:
+            if argv[1] == "?":
+                self.weather_help()
+                return True
+            print(f"省份:{self.pro}，城市:{self.city},当前时间:{datetime.datetime.now()}")
             weather_type = argv[1].split(",")
             weather_type_use = {"now": False, "forecast": False, "7d": False, "all": False}
             #针对all进行处理
